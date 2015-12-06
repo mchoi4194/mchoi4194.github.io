@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<!-- <script src="libs/d3/d3.min.js" charset="utf-8"></script> -->
+<script src="libs/jquery/jquery-2.1.1.min.js" charset="utf-8"></script>
+<script src="http://d3js.org/d3.v2.min.js?2.10.0"></script>
+<!-- <script src="libs/bootstrap/js/bootstrap.min.js" charset="utf-8"></script> -->
+<script src="http://d3js.org/queue.v1.min.js"></script>
+<!-- <script src="js/countvis.js"></script> -->
+<!-- <script src="js/pievis.js"></script> -->
+<script  src="js/jquery.js"></script>
+<script  src="js/colResizable-1.5.min.js"></script>  
+<link rel="stylesheet" type="text/css" href="css/main.css" /> 
+<!-- <link href='http://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'> -->
+<link href='http://fonts.googleapis.com/css?family=Merienda+One' rel='stylesheet' type='text/css'>
+<!-- <script src="js/mapvis.js">
+<script src="js/uservis.js"></script> 
+ <!-- --> 
+
+<!--Stylesheets-->
+<!-- <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.min.css"> -->
+
+
+<!-- Get some nice font-->
+
+
+<!--------------------------------->
+<!-- FROM HERE ON IT IS HW3 stuff-->
+<!--------------------------------->
+
+<!-- add own vis classes-->
+
+<!-- add own stylesheet-->
+<!-- <link rel="stylesheet" type="text/css" href="css/myStyle.css"> -->
+<!-- <link rel="stylesheet" href="chosen.min.css"> -->
+
+
+<html lang = "en">
+
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <script src="libs/d3/d3.min.js" charset="utf-8"></script>
+    <!-- // <script src='chosen.jquery.min.js'></script> -->
+    <script type="text/javascript">
+
+    $(function(){   
+
+        console.log("hie")
+                    //callback function
+                    var onSlide = function(e){
+                        var columns = $(e.currentTarget).find("td");
+                        var ranges = [], total = 0, i, s ="Demographic Breakdown: ", w;
+                        for(i = 0; i<columns.length; i++){
+                            w = columns.eq(i).width()-10 - (i==0?1:0);
+                            ranges.push(w);
+                            total+=w;
+                        }       
+                        console.log(ranges)
+                        var races = ["Hispanic: ", "Black: ", "White: ", "Other: "] 
+                        for(i=0; i<columns.length; i++){            
+                            ranges[i] = 100*ranges[i]/total;
+                            carriage = ranges[i]-w
+                            s+=" "+races[i]+ Math.round(ranges[i]) + "%,";           
+                        }       
+                        // console.log(ranges)
+                        update_demogvis(ranges)
+                        update_score(ranges)
+                        s=s.slice(0,-1)
+                        console.log(s);            
+                        $("#slidertext").html(s);
+                    }
+                    
+                    //colResize the table
+                    $("#range").colResizable({
+                        liveDrag:true, 
+                        draggingClass:"rangeDrag", 
+                        gripInnerHtml:"<div class='rangeGrip'></div>", 
+                        onResize:onSlide,
+                        minWidth:8
+                        });
+                
+                }); 
+</script>
+    <style type="text/css">
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
+    
+        html body #whole {
+            width: 100%;
+            height: 100%;
+            margin-left: 0;
+            padding: 0;
+            position: relative;
+            top: 90px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0);
+        }
+        /*.resizable_img {
+    position: relative; // needed for z-index to work
+    width: 120%;
+    height: auto; // will resize image proportionally
+
+}
+*/
+.resizable_img {
+    position: absolute;
+    top: 110px;
+    left: 50px;
+    /*width: 90%;*/
+    width: 1700px;
+    /*height: 140%;*/
+    height: 1100px;
+    z-index: -1; // place image on top
+}
+
+.img_container {
+    width: 25%;
+    position: relative;
+    overflow: visible; // stops images being shifted 
+    float:left;
+}
+        .header {
+            position: absolute;
+            top: 5px;
+            left: 50px;
+            font: 50px sans-serif;
+            font-weight: bold;
+                        /*font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;*/
+
+        }
+        
+        .fundingslider {
+            /*stroke-width: 'red';*/
+            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+
+/*            width: 20%;
+            height: 100%;*/
+            position: relative;
+            top: 120px;
+            left: 50px;
+            /*font: 30px sans-serif;*/
+            /*font-weight: bold;*/
+        }
+        
+        .fundingvalue {
+            /*stroke-width: 'red';*/
+            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+
+            position: relative;
+            top: 170px;
+            left: 50px;
+            /*font: 30px sans-serif;*/
+            /*font-weight: bold;*/
+        }
+        
+        .classize {
+            /*stroke-width: 'red';*/
+            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+            position: relative;
+            top: 220px;
+            left: 50px;
+            /*font: 30px sans-serif;*/
+            /*font-weight: bold;*/
+        }
+        
+        .safety {
+            /*stroke-width: 'red';*/
+            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+            position: relative;
+            top: 230px;
+            left: 50px;
+            /*font: 30px sans-serif;*/
+            /*font-weight: bold;*/
+        }
+        
+        .safetyvalue {
+            /*stroke-width: 'red';*/
+            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+            position: relative;
+            top: 250px;
+            left: 50px;
+            /*font: 30px sans-serif;*/
+            /*font-weight: bold;*/
+        }
+        
+        .gender {
+            /*stroke-width: 'red';*/
+            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+            position: relative;
+            top: 450px;
+            left: 50px;
+            /*font: 30px sans-serif;*/
+            /*font-weight: bold;*/
+        }
+        .gendervalue {
+            /*stroke-width: 'red';*/
+            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+            position: relative;
+            top: 490px;
+            left: 50px;
+            /*font: 30px sans-serif;*/
+            /*font-weight: bold;*/
+        }
+        .finalscore {
+            /*stroke-width: 'red';*/
+            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+            position: relative;
+            top: 700px;
+            left: 50px;
+            /*font: 30px sans-serif;*/
+            /*font-weight: bold;*/
+        }
+       
+      
+        #pieVis{
+            position: absolute;
+            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+            top: 700px;
+            left: 1100px;
+            /*font: 30px sans-serif;*/
+            /*color: "white";*/
+            /*font-weight: bold;*/
+
+        }
+
+         #demogVis{
+            position: absolute;
+            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+            top: 220px;
+            left: 1100px;
+            /*font: 30px sans-serif;
+            font: 30px sans-serif;*/
+            /*font-weight: bold;*/
+
+        }
+       /* .center{
+            position: absolute;
+            top: 370px;
+            left: 50px;
+            font: 30px sans-serif;
+            width: 0px;
+            height: 0px;
+        }*/
+        #demogtext{
+            position: relative;
+            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+            top: 140px;
+            /*left: 0px;*/
+            left:50px;
+            /*font: 30px sans-serif;*/
+            width: 1500px;
+            height: 20px;
+        }
+        #slider{
+            position: relative;
+            top: 140px;
+            left: 50px;
+            /*font: 30px sans-serif;*/
+            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+            /*width: 1500px;*/
+            /*height: 0px;*/
+        }
+        #slidertext{
+            position: relative;
+            top: 140px;
+            left: 50px;
+            font: 30px sans-serif;
+            /*font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;*/
+
+            width: 1500px;
+            height: 20px;
+            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+  /*color: rgba(0,0,0,0.7);*/
+  /*text-shadow: 3px 3px 3px #fff;*/
+                        /*font: 400 30px/1.3 'Lobster Two', Helvetica, sans-serif;*/
+
+             /*text-align: center;*/
+        }
+        #alltext{
+            position: absolute;
+            top: 70px;
+            color: white;
+            left: 100px;
+            /*font: 30px sans-serif;*/
+            /*font-style: white;*/
+            width: 1500px;
+            height: 20px;
+            float:left;
+            text-align: left;
+            /*font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;*/
+
+            /*font: 400 100px/1.3 'Lobster Two', Helvetica, sans-serif;*/
+  /*color: #2b2b2b;*/
+  /*text-shadow: 1px 1px 0px #ededed, 4px 4px 0px rgba(0,0,0,0.15);*/
+        }
+    </style>
+</head>
+
+<body>
+
+
+    
+    <div class="header">
+        <p float="left">
+            Interactive Tool: Informing Educational Policy Reform
+        </p>
+
+    </div>
+    <div id = "alltext">
+    <form>
+        <span class="fundingslider">
+      Funding: <span id = 'funding'> </span>
+        <input type="range" name="points" min="0" max="2000000" value="0" step="100" id="slider-time" oninput="change_funding(this.value)"> <span id='max_funding'> </span>
+        </span>
+    </form>
+    <div class="fundingvalue">
+        Selected Funding Amount: $0
+        <!--             <select id="fundingvalueid" onchange="change_funding(funding)">
+            </select> -->
+    </div>
+    <!-- </form> -->
+
+    <form>
+        <div class="classize">
+            Select a Class Size:
+            <select id="dropdown" onchange="change_size(this.value)">
+            </select>
+        </div>
+    </form>
+
+    <div class="finalscore">
+        <span id='scorevalue' float="left">
+            Extrapolated Score:
+        </span>
+
+    </div>
+    <form>
+        <span class="safety">
+      Average Number of Crimes in Region: <span id = 'safetyslider'> </span>
+        <input type="range" name="points" min="0" max="5" value="0" step=".5" id="slider-crimes" oninput="change_crime(this.value)"> <span id='max_crimes'> </span>
+        </span>
+    </form>
+    
+    <div class="safetyvalue">
+        Selected Number of Crimes: 0
+        <!--             <select id="fundingvalueid" onchange="change_funding(funding)">
+            </select> -->
+    </div>
+        <form>
+        <span class="gender">
+      Select Female Clas Percentage: <span id = 'genderslider'> </span>
+        <input type="range" name="points" min="0" max="100" value="50" step="1" id="slider-gender" oninput="change_gender(this.value)"> <span id='max_gender'> </span>
+        </span>
+    </form>
+     <div class="gendervalue">
+        Selected Female Class Percentage: 50%
+        <!--             <select id="fundingvalueid" onchange="change_funding(funding)">
+            </select> -->
+    </div>
+    
+    <!-- <span class="center" width = "1500px"> -->
+        <br/><br/>
+        <p id = "demogtext"> Select Hispanic, Black, White, & Other %: </p>
+        <div id="slider">
+            <table id="range" width="600px" height = "200px" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="25%"></td>
+                    <td width="25%"></td>
+                    <td width="25%"></td>
+                    <td width="25%"></td>
+                </tr>
+            </table>    
+        </div>
+        
+        <p id="slidertext">Demographic Breakdown: Hispanic: 25%, Black: 25%, White; 25%, Other: 25%</p>
+        
+        <br/><br/>
+
+    <!-- </span>   -->
+        
+    <div id="pieVis">
+
+    </div>
+     <div id="demogVis">
+
+    </div>
+    
+    </div>
+    <div id = "blackboard">
+       <!-- CITATION: http://stackoverflow.com/questions/13161339/how-to-make-an-image-x-bigger-in-javascript-with-jquery -->
+   <!--      <div class="contents">
+    <div class="img_container"> -->
+        <img class="resizable_img" src="img/blackboard.png">
+    <!-- </div> -->
+</div>
+    
+
+
+    <!--  <div id="day">
+        <form>
+            <label>
+                <input type="checkbox" id="weekday" name="day" value="day"> Weekday</label>
+            <label>
+                <input type="checkbox" id="weekend" name="day" value="weekend"> Weekend</label>
+        </form>
+    </div>
+
+    <form>
+        <div id="stationdropdown">
+            Choose a Station:
+            <select id="dropdown" onchange="stationselect(this.value)">
+            </select>
+        </div>
+    </form>
+
+ -->
+    <!--     <div id="whole">
+        <div id="mapVis">
+
+
+        </div>
+
+
+        <div id="legend">
+
+
+
+
+        </div>
+
+    </div> -->
+
+    <script>
+        var fundingcoef;
+        var ranges = [.25, .25, .25, .25];
+        var hispcoef;
+        var blackcoef;
+        var whitecoef;
+        var othercoef;
+        var percentages = [.5, .5]
+        var femalepercent = 0;
+        var funding = 0;
+        var crimenumber = 0;
+        var crimecoef;
+        var sizecoef;
+        var size = 0;
+        var min_crimes = 0;
+        var max_crimes = 5;
+        var min_funding = "$0";
+        var max_funding = "$2,000,000";
+        var original_data;
+        var score = 0;
+        var min_female = "0%";
+        var max_female= "100%";
+
+        // FIX THIS TO READ IN PROPER COEFFICEINTS
+        d3.json("/regression.json", function(error, data) {
+            original_data = {
+                "Funding": 2.3479892120399519,
+                "Hispanic%": -41.618543514881679,
+                "Crime_number": 1.1191160187298568,
+                "Black%": -0.093382472343717993,
+                "Female%": 0.045942881161129767,
+                "intercept": 672.45409727935169,
+                "Asian%": 43.24913441268059
+            };
+            blackcoef = original_data["Black%"]
+            hispcoef = original_data["Hispanic%"]
+            whitecoef = .01
+            othercoef = .01
+
+            fundingcoef = original_data["Funding"]
+            sizecoef = 5
+            crimecoef = original_data["Crime_number"]
+            gendercoef = original_data["Female%"]
+            sizes = []
+
+            for (i = 0; i < 10; i++) {
+                sizes.push(i)
+            }
+            sizes.forEach(function(k) {
+
+                d3.select("#dropdown").append("option").text(k)
+                    .attr("value", k)
+
+            })
+
+
+            d3.select("#funding").append("span").html(min_funding)
+            // d3.select("#slider-time").attr("value", min_funding)
+            d3.select("#max_funding").append("span").html(max_funding)
+            d3.select("#fundingvalue").append("span").html(funding)
+
+            d3.select("#safetyslider").append("span").html(min_crimes)
+            d3.select("#max_crimes").append("span").html(max_crimes)
+            d3.select("#safetyvalue").append("span").html(crimenumber)
+            // d3.select("#crime").append("span").html(funding)
+
+
+            d3.select("#genderslider").append("span").html(min_female)
+            d3.select("#slider-gender").attr("value", min_female)
+            d3.select("#max_gender").append("span").html(max_female)
+            // d3.select("#slider-time").attr("max", max_funding)
+            // d3.select("#safetyvalue").append("span").html(crimenumber)
+            d3.select("#gendervalue").append("span").html(femalepercent)
+            // var img = new Image();
+            // // var div = document.getElementById('blackboard');
+
+            // img.onload = function() {
+            //     d3.select("#blackboard").append(img);
+            // // };
+            // var img = document.createElement("img");
+            // // img.src = "http://www.google.com/intl/en_com/images/logo_plain.png";
+            // img.src = 'img/blackboard.png'
+
+            // var src = document.getElementById("blackboard");
+            // src.appendChild(img);
+            
+            update_gendervis()
+            update_demogvis(ranges)
+            // update_score()
+        })
+
+     
+        function update_score() {
+            score = funding * fundingcoef + size * sizecoef + crimenumber * crimecoef + femalepercent*gendercoef + ranges[0]*hispcoef + ranges[1]*blackcoef + ranges[2]*whitecoef+ranges[3]*othercoef
+            console.log("score", crimenumber)
+            d3.select("#scorevalue").html("Extrapolated Score: ", score)
+            d3.select("#scorevalue").append("span").html(score)
+            return score;
+
+        }
+
+
+
+        function change_funding(value) {
+            funding = Number(value);
+            displayedfunding = formatDollar(funding)
+            d3.select(".fundingvalue").html("Selected Funding Amount: ", displayedfunding)
+            d3.select(".fundingvalue").append("span").html(displayedfunding)
+            update_score()
+
+
+        }
+
+        function change_crime(value) {
+            crimenumber = value;
+            // displayedfunding = formatDollar(funding)
+            d3.select(".safetyvalue").html("Selected Number of Crimes: ", crimenumber)
+            d3.select(".safetyvalue").append("span").html(crimenumber)
+            update_score()
+
+
+        }
+        function change_gender(value) {
+            femalepercent = value;
+            percentages = [1-(femalepercent/100), femalepercent/100]
+            // displayedfunding = formatDollar(funding)
+            d3.select(".gendervalue").html("Selected Female Class Percentage: ", femalepercent)
+            d3.select(".gendervalue").append("span").html(femalepercent + "%")
+            update_score()
+            update_gendervis()
+
+
+        }
+        function formatDollar(num) {
+            var p = num.toFixed(2).split(".");
+            return "$" + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
+                    return num + (i && !(i % 3) ? "," : "") + acc;
+                }, "")
+                // }
+        }
+
+        function change_size(value) {
+            size = value;
+            update_score()
+
+
+        }
+        function update_gendervis(value){
+            color = ["Blue", "Red"]
+            // var that = this; 
+    var pie = d3.layout.pie()
+    console.log(percentages)
+
+    pie(percentages)
+
+    // console.log(user_final)
+
+    var outerRadius = 250 / 2;
+    var innerRadius = 0;
+    var hover = d3.svg.arc()
+        .innerRadius(innerRadius)
+        .outerRadius(outerRadius);
+
+    d3.selectAll(".pieBrushAvg").remove();
+
+    var svg = d3.select("#pieVis")
+        .append("svg")
+        .attr("class", "pieBrushAvg secondsvg")
+        .attr("transform", "translate(" + 700 + ", " + 700 + ")")
+         .attr("width", 600)
+        .attr("height", 500)
+
+    var hovers = svg.selectAll("g.hover")
+        .data(pie(percentages))
+        .enter()
+        .append("g")
+        .attr("class", function(d, i) {
+            return "hover hover" + i
+        })
+        .attr("transform", "translate(" + outerRadius + ", " + outerRadius + ")")
+
+
+    var secondsvg = d3.select(".secondsvg").append("text")
+        .text("Gender Distribution")
+        .style("fill", "white")
+        .attr("class", "text")
+        .attr("transform", "translate(" + 10 + ", " + 300 + ")")
+        // .style("fill", "black")
+
+    hovers.append("path")
+        .attr("d", hover)
+
+    hovers.attr("fill", function(d, i) {
+        return color[i]
+    })
+      .attr("id", function(d, i) {
+        return "hover" + i + ""
+    })
+
+
+
+    var spacing = 15;
+    var legendrect = 17;
+   
+
+    var legend = svg.selectAll('.legend')
+        .data(color)
+        .enter()
+        .append('g')
+        .attr('class', 'legend')
+        .attr('transform', function(d, i) {
+            var height = legendrect + spacing;
+            var offset = height;
+            var x = 17 * legendrect;
+            var y = i * height + offset;
+            return 'translate(' + x + ',' + y + ')';
+        })
+        .attr("id", function(d, i) {
+            return "hover" + i + ""
+        })
+        .attr("class", function(d, i) {
+            return "hover hover" + i + ""
+        })
+        .on("mouseover", function(d) {
+            d3.selectAll(".hover")
+                .style("opacity", function(k) {
+                    return .1;
+                })
+            d3.selectAll('.' + this.id).style("opacity", 1)
+           
+        })
+    .on("mouseout", function(d) {
+        d3.selectAll(".hover")
+            .style("opacity", function(k) {
+                return 1;
+
+            })
+    })
+
+    var labels = ["Male", "Female"]
+
+    legend.append('rect')
+        .attr('width', legendrect)
+        .attr('height', legendrect)
+        .style('fill', function(d, i) {
+            return color[i];
+        })
+        .style('stroke', color);
+
+    legend.append('text')
+        .attr('x', legendrect + spacing)
+        .attr('y', legendrect)
+        .style("fill", "white")
+        .text(function(d, i) {
+            return labels[i];
+
+        })
+       
+    this.svg = d3.select("#pieVis").select("svg");
+
+
+
+     hovers
+        .on("mouseover", function(d) {
+            d3.selectAll(".hover")
+                .style("opacity", function(k) {
+                    return .1;
+                })
+            d3.selectAll('.' + this.id).style("opacity", 1)
+        })
+
+    .on("mouseout", function(d) {
+            d3.selectAll(".hover")
+                .style("opacity", function(k) {
+                    return 1;
+
+                })
+        })
+
+  
+
+}
+
+function update_demogvis(value){
+    var newcolor = ["Yellow", "Blue", "Green", "Purple"]
+            // var that = this; 
+    var dpie = d3.layout.pie()
+    console.log(value)
+
+    dpie(value)
+
+    // console.log(user_final)
+
+    var outerRadius = 250 / 2;
+    var innerRadius = 0;
+    var hovernew = d3.svg.arc()
+        .innerRadius(innerRadius)
+        .outerRadius(outerRadius);
+
+    d3.selectAll(".demogBrushAvg").remove();
+
+    var newsvg = d3.select("#demogVis")
+        .append("svg")
+        .attr("class", "demogBrushAvg thirdsvg")
+        .attr("transform", "translate(" + 900 + ", " + 900 + ")")
+         .attr("width", 600)
+        .attr("height", 350)
+
+    var hovernews = newsvg.selectAll("g.hovernew")
+        .data(dpie(value))
+        .enter()
+        .append("g")
+        .attr("class", function(d, i) {
+            return "hovernew hovernew" + i
+        })
+        .attr("transform", "translate(" + outerRadius + ", " + outerRadius + ")")
+
+
+    var thirdsvg = d3.select(".thirdsvg").append("text")
+        .text("Demographic Distribution")
+        .attr("class", "text")
+        .attr("transform", "translate(" + 0 + ", " + 300 + ")")
+        .style("fill", "white")
+
+    hovernews.append("path")
+        .attr("d", hovernew)
+
+    hovernews.attr("fill", function(d, i) {
+        return newcolor[i]
+    })
+      .attr("id", function(d, i) {
+        return "hovernew" + i + ""
+    })
+
+
+
+    var spacing = 15;
+    var newlegendrect = 17;
+   
+
+    var newlegend = newsvg.selectAll('.newlegend')
+        .data(newcolor)
+        .enter()
+        .append('g')
+        .attr('class', 'newlegend')
+        .attr('transform', function(d, i) {
+            var height = newlegendrect + spacing;
+            var offset = height;
+            var x = 17 * newlegendrect + 10;
+            var y = i * height + offset;
+            return 'translate(' + x + ',' + y + ')';
+        })
+        .attr("id", function(d, i) {
+            return "hovernew" + i + ""
+        })
+        .attr("class", function(d, i) {
+            return "hovernew hovernew" + i + ""
+        })
+        .on("mouseover", function(d) {
+            d3.selectAll(".hovernew")
+                .style("opacity", function(k) {
+                    return .1;
+                })
+            d3.selectAll('.' + this.id).style("opacity", 1)
+           
+        })
+    .on("mouseout", function(d) {
+        d3.selectAll(".hovernew")
+            .style("opacity", function(k) {
+                return 1;
+
+            })
+    })
+
+    var labels = ["Hispanic", "Black", "White", "Other"]
+
+    newlegend.append('rect')
+        .attr('width', newlegendrect)
+        .attr('height', newlegendrect)
+        .style('fill', function(d, i) {
+            return newcolor[i];
+        })
+        .style('stroke', newcolor);
+
+    newlegend.append('text')
+        .attr('x', newlegendrect + spacing)
+        .attr('y', newlegendrect)
+        .style("fill", "white")
+        .text(function(d, i) {
+            return labels[i];
+        })
+       
+    this.svg = d3.select("#demogVis").select("svg");
+
+
+
+     hovernews
+        .on("mouseover", function(d) {
+            d3.selectAll(".hovernew")
+                .style("opacity", function(k) {
+                    return .1;
+                })
+            d3.selectAll('.' + this.id).style("opacity", 1)
+        })
+
+    .on("mouseout", function(d) {
+            d3.selectAll(".hovernew")
+                .style("opacity", function(k) {
+                    return 1;
+
+                })
+        })
+    // console.log("demog")
+    // color = ["yellow", "blue", "purple", "green"]
+    //         // var that = this; 
+    // var dpie = d3.layout.pie()
+    // console.log(value)
+
+    // dpie(value)
+
+    // // console.log(user_final)
+
+    // var outerRadius = 250 / 2;
+    // var innerRadius = 0;
+    // var dhover = d3.svg.arc()
+    //     .innerRadius(innerRadius)
+    //     .outerRadius(outerRadius);
+
+    // d3.selectAll(".demogBrushAvg").remove();
+
+    // var svg = d3.select("#demogVis")
+    //     .append("svg")
+    //     .attr("class", "demogBrushAvg demogsvg")
+    //     .attr("transform", "translate(" + 700 + ", " + 700 + ")")
+    //      .attr("width", 600)
+    //     .attr("height", 500)
+
+    // var dhovers = svg.selectAll("g.hover")
+    //     .data(dpie(value))
+    //     .enter()
+    //     .append("g")
+    //     .attr("class", function(d, i) {
+    //         return "dhover dhover" + i
+    //     })
+    //     .attr("transform", "translate(" + outerRadius + ", " + outerRadius + ")")
+
+
+    // var demogsvg = d3.select(".demogsvg").append("text")
+    //     .text("Demographic Distribution")
+    //     .attr("class", "text")
+    //     .attr("transform", "translate(" + 10 + ", " + 300 + ")")
+    //     .style("fill", "black")
+
+    // dhovers.append("path")
+    //     .attr("d", dhover)
+
+    // dhovers.attr("fill", function(d, i) {
+    //     return color[i]
+    // })
+    //   .attr("id", function(d, i) {
+    //     return "dhover" + i + ""
+    // })
+
+
+
+    // var spacing = 15;
+    // var legendrect = 17;
+   
+
+    // var legend = svg.selectAll('.legend')
+    //     .data(color)
+    //     .enter()
+    //     .append('g')
+    //     .attr('class', 'legend')
+    //     .attr('transform', function(d, i) {
+    //         var height = legendrect + spacing;
+    //         var offset = height;
+    //         var x = 17 * legendrect + 30;
+    //         var y = i * height + offset;
+    //         return 'translate(' + x + ',' + y + ')';
+    //     })
+    //     .attr("id", function(d, i) {
+    //         return "dhover" + i + ""
+    //     })
+    //     .attr("class", function(d, i) {
+    //         return "dhover dhover" + i + ""
+    //     })
+    //     .on("mouseover", function(d) {
+    //         d3.selectAll(".dhover")
+    //             .style("opacity", function(k) {
+    //                 return .1;
+    //             })
+    //         d3.selectAll('.' + this.id).style("opacity", 1)
+           
+    //     })
+    // .on("mouseout", function(d) {
+    //     d3.selectAll(".dhover")
+    //         .style("opacity", function(k) {
+    //             return 1;
+
+    //         })
+    // })
+
+    // var labels = ["Hispanic", "Black", "White", "other"]
+
+    // legend.append('rect')
+    //     .attr('width', legendrect)
+    //     .attr('height', legendrect)
+    //     .style('fill', function(d, i) {
+    //         return color[i];
+    //     })
+    //     .style('stroke', color);
+
+    // legend.append('text')
+    //     .attr('x', legendrect + spacing)
+    //     .attr('y', legendrect)
+    //     .text(function(d, i) {
+    //         return labels[i];
+    //     })
+       
+    // this.svg = d3.select("#demogVis").select("svg");
+
+
+
+    //  dhovers
+    //     .on("mouseover", function(d) {
+    //         d3.selectAll(".dhover")
+    //             .style("opacity", function(k) {
+    //                 return .1;
+    //             })
+    //         d3.selectAll('.' + this.id).style("opacity", 1)
+    //     })
+
+    // .on("mouseout", function(d) {
+    //         d3.selectAll(".dhover")
+    //             .style("opacity", function(k) {
+    //                 return 1;
+
+    //             })
+    //     })
+
+  
+
+}
+        
+    </script>
+</body>
+
+</html>
