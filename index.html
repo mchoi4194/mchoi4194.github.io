@@ -82,8 +82,12 @@
             width: 1500px;
             font-weight: bold;
         }
-        
-        .fundingslider {
+/*        #welcome{
+            position:absolute;
+            top: 20px;
+            left: 150px;
+        }*/
+        #fundingslider {
             font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
             position: relative;
             top: 120px;
@@ -202,6 +206,8 @@
 
 <!-- Create html elements for all interactive sliders and forms -->
 <body>
+    <div id = "welcome">
+    </div>
     <div class="header">
         <p float="left">
             Interactive Tool: Informing Educational Policy Reform
@@ -210,7 +216,7 @@
     </div>
     <div id="alltext">
         <form>
-            <span class="fundingslider">
+            <span id="fundingslider">
       Funding: <span id = 'funding'> </span>
             <input type="range" name="points" min="0" max="2000000" value="0" step="100" id="slider-time" oninput="change_funding(this.value)"> <span id='max_funding'> </span>
             </span>
@@ -452,7 +458,7 @@
                 .append("svg")
                 .attr("class", "pieBrushAvg secondsvg")
                 .attr("transform", "translate(" + 700 + ", " + 700 + ")")
-                .attr("width", 500)
+                .attr("width", 450)
                 .attr("height", 350)
 
             var hovers = svg.selectAll("g.hover")
@@ -588,7 +594,7 @@
                 .append("svg")
                 .attr("class", "demogBrushAvg thirdsvg")
                 .attr("transform", "translate(" + 900 + ", " + 900 + ")")
-                .attr("width", 500)
+                .attr("width", 450)
                 .attr("height", 350)
 
             var hovernews = newsvg.selectAll("g.hovernew")
