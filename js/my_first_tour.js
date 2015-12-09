@@ -16,14 +16,14 @@
         },
         {
           title: "Hover",
-          content: "Hover over the legends to highlight your selection.",
+          content: "Hover over the pie segments or legends to highlight your selection.",
           target: "pieVis",
-          placement: "right"
+          placement: "left"
         },
         {
           title: "Infer Results",
           content: "See the inferred score based on the variables you selected.",
-          target: "surveyscorevalue",
+          target: "scorevalue",
           placement: "right"
         },
         
