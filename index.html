@@ -56,7 +56,7 @@
                 draggingClass: "rangeDrag",
                 gripInnerHtml: "<div class='rangeGrip'></div>",
                 onResize: onSlide,
-                minWidth: 5
+                minWidth: 8
             });
 
         });
@@ -214,7 +214,7 @@
         <form>
             <span id="fundingslider">
       Funding: <span id = 'funding'> </span>
-            <input type="range" name="points" min="0" max="2000000" value="0" step="100" id="slider-time" oninput="change_funding(this.value)"> <span id='max_funding'> </span>
+            <input type="range" name="points" min="500000" max="11000000" value="0" step="100" id="slider-time" oninput="change_funding(this.value)"> <span id='max_funding'> </span>
             </span>
         </form>
         <div class="fundingvalue">
@@ -231,20 +231,20 @@
 
         <div class="finalscore">
             <span id='scorevalue' float="left">
-            Extrapolated Math Score:
+            Predicted Math Score:
         </span>
 
         </div>
         <div class="surveyscore">
             <span id='surveyscorevalue' float="left">
-            Extrapolated Survey Score:
+            Predicted Survey Score:
         </span>
 
         </div>
         <form class="safety">
             <span >
       Average Number of Crimes in Region: <span id = 'safetyslider'> </span>
-            <input type="range" name="points" min="0" max="5" value="0" step=".5" id="slider-crimes" oninput="change_crime(this.value)"> <span id='max_crimes'> </span>
+            <input type="range" name="points" min="0" max="15" value="0" step=".5" id="slider-crimes" oninput="change_crime(this.value)"> <span id='max_crimes'> </span>
             </span>
         </form>
 
@@ -292,51 +292,62 @@
 
     <script>
         // initialize variables to default values set on slider
-        var fundingcoef;
         var ranges = [.25, .25, .25, .25];
+        var fundingcoef;
         var hispcoef;
         var blackcoef;
         var whitecoef;
-        var othercoef;
-        var percentages = [.5, .5]
-        var femalepercent = 0;
-        var funding = 0;
-        var crimenumber = 0;
+        var asiancoef;
         var crimecoef;
         var sizecoef;
+        var s_fundingcoef;
+        var s_hispcoef;
+        var s_blackcoef;
+        var s_whitecoef;
+        var s_asiancoef;
+        var s_crimecoef;
+        var s_sizecoef;
+        var percentages = [.5, .5]
+        var femalepercent = 0;
+        var funding = 500000;
+        var crimenumber = 0;
         var size = 0;
         var min_crimes = 0;
-        var max_crimes = 5;
-        var min_funding = "$0";
-        var max_funding = "$2,000,000";
+        var max_crimes = 15;
+        var min_funding = "$500,000";
+        var max_funding = "$11,000,000";
         var original_data;
         var score = 0;
         var min_female = "0%";
         var max_female = "100%";
+        var intercept;
 
-        // FIX THIS TO READ IN PROPER COEFFICEINTS
-        d3.json("/regression.json", function(error, data) {
+        // Load in coefficients from regression output for math scores
+        d3.json("data/coef_math.json", function(error, data) {
+            console.log(data)
             original_data = {
-                "Funding": 2.3479892120399519,
-                "Hispanic%": -41.618543514881679,
-                "Crime_number": 1.1191160187298568,
-                "Black%": -0.093382472343717993,
-                "Female%": 0.045942881161129767,
-                "intercept": 672.45409727935169,
-                "Asian%": 43.24913441268059
+                "Funding": data["Funding"],
+                "Hispanic%": data["Hispanic Percentage"],
+                "Crime_number": data["Average Number of Crimes"],
+                "Black%": data["Black Percentage"],
+                "Female%": data["Female Percentage"],
+                "intercept": data["Intercept"],
+                "Asian%": data["Asian Percentage"],
+                "White%": data["White Percentage"],
+                "Size": data["Average Class Size"]
             };
             blackcoef = original_data["Black%"]
             hispcoef = original_data["Hispanic%"]
-            whitecoef = .01
-            othercoef = .01
-
+            whitecoef = original_data["White%"]
+            asiancoef = original_data["Asian%"]
             fundingcoef = original_data["Funding"]
-            sizecoef = 5
+            sizecoef = original_data["Size"]
             crimecoef = original_data["Crime_number"]
             gendercoef = original_data["Female%"]
             sizes = []
+            intercept = original_data["intercept"]
 
-            for (i = 0; i < 10; i++) {
+            for (i = 1; i <= 55; i++) {
                 sizes.push(i)
             }
             sizes.forEach(function(k) {
@@ -365,20 +376,45 @@
             update_gendervis()
             update_demogvis(ranges)
         })
+        d3.json("data/coef_survey.json", function(error, data) {
+            // console.log(data)
+            s_original_data = {
+                "Funding": data["Funding"],
+                "Hispanic%": data["Hispanic Percentage"],
+                "Crime_number": data["Average Number of Crimes"],
+                "Black%": data["Black Percentage"],
+                "Female%": data["Female Percentage"],
+                "intercept": data["Intercept"],
+                "Asian%": data["Asian Percentage"],
+                "White%": data["White Percentage"],
+                "Size": data["Average Class Size"]
+            };
+            s_blackcoef = s_original_data["Black%"]
+            s_hispcoef = s_original_data["Hispanic%"]
+            s_whitecoef = s_original_data["White%"]
+            s_asiancoef = s_original_data["Asian%"]
+            s_fundingcoef = s_original_data["Funding"]
+            s_sizecoef = s_original_data["Size"]
+            s_crimecoef = s_original_data["Crime_number"]
+            s_gendercoef = s_original_data["Female%"]
+            s_intercept = s_original_data["intercept"]
+        })
 
 
         function update_score(ranges) {
+            console.log("RANGES HERE", ranges)
+            console.log("funding", fundingcoef, "size", sizecoef, "crime", crimecoef, "female", gendercoef, "ranges", ranges, "hispanic", hispcoef, "black", blackcoef, "white", whitecoef)
             // Set scores based on variables from the regression
-            score = funding * fundingcoef + size * sizecoef + crimenumber * crimecoef + femalepercent * gendercoef + ranges[0] * hispcoef + ranges[1] * blackcoef + ranges[2] * whitecoef + ranges[3] * othercoef
+            score = Math.log(funding) * fundingcoef + size * sizecoef + crimenumber * crimecoef + femalepercent/100 * gendercoef + ranges[0]/100 * hispcoef + ranges[1]/100 * blackcoef + ranges[2]/100 * whitecoef + ranges[3]/100 * asiancoef + intercept
             
-            surveyscore = funding * fundingcoef + size * sizecoef + crimenumber * crimecoef + femalepercent * gendercoef + ranges[0] * hispcoef + ranges[1] * blackcoef + ranges[2] * whitecoef + ranges[3] * othercoef *.5
+            surveyscore = Math.log(funding) * s_fundingcoef + size * s_sizecoef + crimenumber * s_crimecoef + femalepercent/100 * s_gendercoef + ranges[0]/100 * s_hispcoef + ranges[1]/100 * s_blackcoef + ranges[2]/100 * s_whitecoef + ranges[3]/100 * s_asiancoef + s_intercept
             displayscore = score.toFixed(2)
             surveyscore = surveyscore.toFixed(2)
 
             // Update score values on display
-            d3.select("#scorevalue").html("Extrapolated Math Score: ", displayscore)
+            d3.select("#scorevalue").html("Predicted Math Score: ", displayscore)
             d3.select("#scorevalue").append("span").html(displayscore)
-            d3.select("#surveyscorevalue").html("Extrapolated Survey Score: ", surveyscore)
+            d3.select("#surveyscorevalue").html("Predicted Survey Score: ", surveyscore)
             d3.select("#surveyscorevalue").append("span").html(surveyscore)
             return score;
 

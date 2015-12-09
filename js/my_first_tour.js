@@ -21,8 +21,8 @@
           placement: "left"
         },
         {
-          title: "Infer Results",
-          content: "See the inferred score based on the variables you selected.",
+          title: "Predict Results",
+          content: "See the predicted score based on the variables you selected and the coefficients outputted from our regressions.",
           target: "scorevalue",
           placement: "right"
         },
