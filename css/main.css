@@ -23,23 +23,24 @@ body{
 #slider:before{
 	display:block;
 	background-image: url('../img/rangeBar.png');	
-	background-position:0px 10px;
+	background-position:0px 5px;
 	background-repeat: repeat-x;
 	margin-left:9px;
-	width:560px;
-	height:30px;
-	position:relative;
+	width:280px;
+	height:15px;
+	/*position:relative;*/
 	position:absolute;
 	content:""
 }
 
 #range td{
 	border:none;
+	/*top:0px;*/
 }
 
 .rangeGrip{
-	width:10px;
-	height:19px;
+	width:5px;
+	height:12px;
 	cursor:e-resize;
 	background-image: url('../img/slider.png');
 	z-index:8;

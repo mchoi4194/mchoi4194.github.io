@@ -2,12 +2,6 @@
     var tour = {
       id: "hello-hopscotch",
       steps: [
-        // {
-        //   title: "User representation",
-        //   content: "The demographic of casual vs. registered users is represented here based on the selections previoiusly made. ",
-        //   target: "pieVis",
-        //   placement: "right"
-        // },
         {
           title: "Welcome",
           content: "Toggle these sliders to set values for these variables.",

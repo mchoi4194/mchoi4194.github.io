@@ -56,7 +56,7 @@
                 draggingClass: "rangeDrag",
                 gripInnerHtml: "<div class='rangeGrip'></div>",
                 onResize: onSlide,
-                minWidth: 8
+                minWidth: 5
             });
 
         });
@@ -64,138 +64,134 @@
 
 
     <style type="text/css">
-        
+        /*Set relevant CSS variables*/
         .resizable_img {
             position: absolute;
-            top: 120px;
-            left: 50px;
-            width: 1700px;
-            height: 1100px;
+            top: 60px;
+            left: 25px;
+            width: 900px;
+            height: 600px;
             z-index: -1; // place image on top
         }
         
         .header {
             position: absolute;
-            top: 5px;
-            left: 150px;
-            font: 50px sans-serif;
-            width: 1500px;
+            top: 2.5px;
+            left: 120px;
+            font: 25px sans-serif;
+            width: 750px;
             font-weight: bold;
         }
-/*        #welcome{
-            position:absolute;
-            top: 20px;
-            left: 150px;
-        }*/
+
         #fundingslider {
-            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+            font: 400 15px/1.2 'Merienda One', Helvetica, sans-serif;
             position: relative;
-            top: 120px;
-            left: 50px;
+            top: 25px;
+            left: 0px;
         }
         
         .fundingvalue {
-            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+            font: 400 15px/1.2 'Merienda One', Helvetica, sans-serif;
             position: relative;
-            top: 170px;
-            left: 50px;
+            top: 50px;
+            left: 0px;
         }
         
         .classize {
-            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+            font: 400 15px/1.2 'Merienda One', Helvetica, sans-serif;
             position: relative;
-            top: 220px;
-            left: 50px;
+            top: 75px;
+            left: 0px;
         }
         
         .safety {
-            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+            font: 400 15px/1.2 'Merienda One', Helvetica, sans-serif;
             position: relative;
-            top: 170px;
-            left: 50px;
+            top: 40px;
+            left: 0px;
         }
         
         .safetyvalue {
-            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+            font: 400 15px/1.2 'Merienda One', Helvetica, sans-serif;
             position: relative;
-            top: 220px;
-            left: 50px;
+            top: 60px;
+            left: 0px;
         }
         
         .gender {
-            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+            font: 400 15px/1.2 'Merienda One', Helvetica, sans-serif;
             position: relative;
-            top: 270px;
-            left: 50px;
+            top: 80px;
+            left: 0px;
         }
         
         .gendervalue {
-            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+            font: 400 15px/1.2 'Merienda One', Helvetica, sans-serif;
             position: relative;
-            top: 320px;
-            left: 50px;
+            top: 100px;
+            left: 0px;
         }
         
         .finalscore {
-            font: 400 40px/1.2 'Merienda One', Helvetica, sans-serif;
+            font: 400 20px/1.2 'Merienda One', Helvetica, sans-serif;
             /*text-decoration: underline;*/
             position: relative;
-            top: 810px;
-            left: 50px;
+            top: 360px;
+            left: 0px;
         }
         .surveyscore {
-            font: 400 40px/1.2 'Merienda One', Helvetica, sans-serif;
+            font: 400 20px/1.2 'Merienda One', Helvetica, sans-serif;
             position: relative;
-            top: 760px;
-            left: 770px;
+            top: 390px;
+            left: 0px;
         }
         
         #pieVis {
             position: absolute;
-            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
-            top: 150px;
-            left: 1000px;
+            font: 400 15px/1.2 'Merienda One', Helvetica, sans-serif;
+            top: 40px;
+            left: 520px;
         }
         
         #demogVis {
             position: absolute;
-            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
-            top: 480px;
-            left: 1000px;
+            font: 400 15px/1.2 'Merienda One', Helvetica, sans-serif;
+            top: 200px;
+            left: 520px;
         }
 
         
         #demogtext {
             position: relative;
-            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
-            top: 290px;
-            left: 50px;
+            font: 400 15px/1.2 'Merienda One', Helvetica, sans-serif;
+            top: 75px;
+            left: 0px;
             width: 1500px;
             height: 20px;
         }
         
         #slider {
             position: relative;
-            top: 300px;
-            left: 50px;
+            top: 65px;
+            left: 0px;
             font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
         }
         
         #slidertext {
             position: relative;
-            top: 290px;
-            left: 50px;
-            font: 30px sans-serif;
+            top: 50px;
+            left: 0px;
+            font: 15px sans-serif;
             width: 1500px;
             height: 20px;
-            font: 400 30px/1.2 'Merienda One', Helvetica, sans-serif;
+            font: 400 15px/1.2 'Merienda One', Helvetica, sans-serif;
         }
         
         #alltext {
             position: absolute;
-            top: 100px;
+            top: 90px;
             color: white;
-            left: 110px;
+            left: 90px;
             width: 1500px;
             height: 20px;
             float: left;
@@ -269,7 +265,7 @@
         <!-- citation for slider: http://www.bacubacu.com/colresizable/#samples -->
         <p id="demogtext"> Select Hispanic, Black, White, & Asian %: </p>
         <div id="slider">
-            <table id="range" width="600px" height="200px" cellspacing="0" cellpadding="0">
+            <table id="range" width="300px" height="200px" cellspacing="0" cellpadding="0">
                 <tr>
                     <td width="25%"></td>
                     <td width="25%"></td>
@@ -283,14 +279,9 @@
 
         <br/>
         <br/>
-
-        <!-- </span>   -->
-
         <div id="pieVis">
-
         </div>
         <div id="demogVis">
-
         </div>
 
     </div>
@@ -299,8 +290,8 @@
         <img class="resizable_img" src="img/blackboard.png">
     </div>
 
-
     <script>
+        // initialize variables to default values set on slider
         var fundingcoef;
         var ranges = [.25, .25, .25, .25];
         var hispcoef;
@@ -355,7 +346,7 @@
 
             })
 
-
+            // set d3 selectors that set min/max values for sliders and update their values
             d3.select("#funding").append("span").html(min_funding)
             d3.select("#max_funding").append("span").html(max_funding)
             d3.select("#fundingvalue").append("span").html(funding)
@@ -370,23 +361,24 @@
             d3.select("#max_gender").append("span").html(max_female)
             d3.select("#gendervalue").append("span").html(femalepercent)
 
+            // create visualizations
             update_gendervis()
             update_demogvis(ranges)
         })
 
 
         function update_score(ranges) {
-            console.log(ranges)
+            // Set scores based on variables from the regression
             score = funding * fundingcoef + size * sizecoef + crimenumber * crimecoef + femalepercent * gendercoef + ranges[0] * hispcoef + ranges[1] * blackcoef + ranges[2] * whitecoef + ranges[3] * othercoef
+            
             surveyscore = funding * fundingcoef + size * sizecoef + crimenumber * crimecoef + femalepercent * gendercoef + ranges[0] * hispcoef + ranges[1] * blackcoef + ranges[2] * whitecoef + ranges[3] * othercoef *.5
             displayscore = score.toFixed(2)
             surveyscore = surveyscore.toFixed(2)
 
-
-            // console.log("score", crimenumber)
+            // Update score values on display
             d3.select("#scorevalue").html("Extrapolated Math Score: ", displayscore)
             d3.select("#scorevalue").append("span").html(displayscore)
-            d3.select("#surveyscorevalue").html("Extrapolated Math Score: ", surveyscore)
+            d3.select("#surveyscorevalue").html("Extrapolated Survey Score: ", surveyscore)
             d3.select("#surveyscorevalue").append("span").html(surveyscore)
             return score;
 
@@ -395,6 +387,7 @@
 
 
         function change_funding(value) {
+            // update funding value based on selection, and update display
             funding = Number(value);
             displayedfunding = formatDollar(funding)
             d3.select(".fundingvalue").html("Selected Funding Amount: ", displayedfunding)
@@ -405,6 +398,7 @@
         }
 
         function change_crime(value) {
+            // update safety value based on selection, and update display
             crimenumber = value;
             d3.select(".safetyvalue").html("Selected Number of Crimes: ", crimenumber)
             d3.select(".safetyvalue").append("span").html(crimenumber)
@@ -414,6 +408,7 @@
         }
 
         function change_gender(value) {
+            // update gender value based on selection, and update display
             femalepercent = value;
             percentages = [1 - (femalepercent / 100), femalepercent / 100]
             d3.select(".gendervalue").html("Selected Female Class Percentage: ", femalepercent)
@@ -430,10 +425,10 @@
             return "$" + p[0].split("").reverse().reduce(function(acc, num, i, orig) {
                     return num + (i && !(i % 3) ? "," : "") + acc;
                 }, "")
-                // }
         }
 
         function change_size(value) {
+            // update size value based on selection, and update display
             size = value;
             update_score(ranges)
 
@@ -441,26 +436,28 @@
 
         function update_gendervis(value) {
             color = ["Blue", "Red"]
+
+            // Create pie display from gender percentages
             var pie = d3.layout.pie()
-            console.log(percentages)
-
             pie(percentages)
-
-            var outerRadius = 220 / 2;
+            var outerRadius = 55;
             var innerRadius = 0;
             var hover = d3.svg.arc()
                 .innerRadius(innerRadius)
                 .outerRadius(outerRadius);
 
+            // Remove former pie graph with old data
             d3.selectAll(".pieBrushAvg").remove();
 
+            // Create SVG for pie chart
             var svg = d3.select("#pieVis")
                 .append("svg")
                 .attr("class", "pieBrushAvg secondsvg")
-                .attr("transform", "translate(" + 700 + ", " + 700 + ")")
-                .attr("width", 450)
-                .attr("height", 350)
+                .attr("transform", "translate(" + 350 + ", " + 350 + ")")
+                .attr("width", 225)
+                .attr("height", 175)
 
+            // Set classes for corresponding colored pie slices to match them with corresponding legend values to create hover effect
             var hovers = svg.selectAll("g.hover")
                 .data(pie(percentages))
                 .enter()
@@ -470,14 +467,14 @@
                 })
                 .attr("transform", "translate(" + outerRadius + ", " + outerRadius + ")")
 
-
+            // set text or display
             var secondsvg = d3.select(".secondsvg").append("text")
                 .text("Gender Distribution")
                 .style("fill", "white")
                 .attr("class", "text")
-                .attr("transform", "translate(" + 10 + ", " + 275+ ")")
-                // .style("fill", "black")
+                .attr("transform", "translate(" + 5 + ", " + 138+ ")")
 
+            // Color in pie slices with 
             hovers.append("path")
                 .attr("d", hover)
 
@@ -489,11 +486,10 @@
                 })
 
 
-
-            var spacing = 15;
-            var legendrect = 17;
-
-
+            // create legend with hover functionality
+            var spacing = 7.5;
+            var legendrect = 8.5;
+            // Set appropriate classes and id's to correspond with classes and id's of the pie slices, so on mouseover and mouseout the corresponding pie slices will change opacity
             var legend = svg.selectAll('.legend')
                 .data(color)
                 .enter()
@@ -502,7 +498,7 @@
                 .attr('transform', function(d, i) {
                     var height = legendrect + spacing;
                     var offset = height;
-                    var x = 17 * legendrect - 20;
+                    var x = 15 * legendrect ;
                     var y = i * height + offset;
                     return 'translate(' + x + ',' + y + ')';
                 })
@@ -528,8 +524,8 @@
                         })
                 })
 
+            // Create labels for the legend with appropriate text labels and classes/id's so hover function works
             var labels = ["Male", "Female"]
-
             legend.append('rect')
                 .attr('width', legendrect)
                 .attr('height', legendrect)
@@ -546,10 +542,6 @@
                     return labels[i];
 
                 })
-
-            this.svg = d3.select("#pieVis").select("svg");
-
-
 
             hovers
                 .on("mouseover", function(d) {
@@ -577,26 +569,20 @@
                 // var that = this; 
             var dpie = d3.layout.pie()
             // console.log(value)
-
             dpie(value)
-
             // console.log(user_final)
-
-            var outerRadius = 220 / 2;
+            var outerRadius = 55;
             var innerRadius = 0;
             var hovernew = d3.svg.arc()
                 .innerRadius(innerRadius)
                 .outerRadius(outerRadius);
-
             d3.selectAll(".demogBrushAvg").remove();
-
             var newsvg = d3.select("#demogVis")
                 .append("svg")
                 .attr("class", "demogBrushAvg thirdsvg")
-                .attr("transform", "translate(" + 900 + ", " + 900 + ")")
-                .attr("width", 450)
-                .attr("height", 350)
-
+                .attr("transform", "translate(" + 350 + ", " + 350 + ")")
+                .attr("width", 225)
+                .attr("height", 175)
             var hovernews = newsvg.selectAll("g.hovernew")
                 .data(dpie(value))
                 .enter()
@@ -605,30 +591,21 @@
                     return "hovernew hovernew" + i
                 })
                 .attr("transform", "translate(" + outerRadius + ", " + outerRadius + ")")
-
-
             var thirdsvg = d3.select(".thirdsvg").append("text")
                 .text("Demographic Distribution")
                 .attr("class", "text")
-                .attr("transform", "translate(" + 0 + ", " + 275 + ")")
+                .attr("transform", "translate(" + 0 + ", " + 138 + ")")
                 .style("fill", "white")
-
             hovernews.append("path")
                 .attr("d", hovernew)
-
             hovernews.attr("fill", function(d, i) {
                     return newcolor[i]
                 })
                 .attr("id", function(d, i) {
                     return "hovernew" + i + ""
                 })
-
-
-
-            var spacing = 15;
-            var newlegendrect = 17;
-
-
+            var spacing = 7.5;
+            var newlegendrect = 9.5;
             var newlegend = newsvg.selectAll('.newlegend')
                 .data(newcolor)
                 .enter()
@@ -637,7 +614,7 @@
                 .attr('transform', function(d, i) {
                     var height = newlegendrect + spacing;
                     var offset = height;
-                    var x = 17 * newlegendrect -20;
+                    var x = 15 * newlegendrect;
                     var y = i * height + offset;
                     return 'translate(' + x + ',' + y + ')';
                 })
@@ -653,18 +630,14 @@
                             return .1;
                         })
                     d3.selectAll('.' + this.id).style("opacity", 1)
-
                 })
                 .on("mouseout", function(d) {
                     d3.selectAll(".hovernew")
                         .style("opacity", function(k) {
                             return 1;
-
                         })
                 })
-
             var labels = ["Hispanic", "Black", "White", "Asian"]
-
             newlegend.append('rect')
                 .attr('width', newlegendrect)
                 .attr('height', newlegendrect)
@@ -672,7 +645,6 @@
                     return newcolor[i];
                 })
                 .style('stroke', newcolor);
-
             newlegend.append('text')
                 .attr('x', newlegendrect + spacing)
                 .attr('y', newlegendrect)
@@ -680,11 +652,7 @@
                 .text(function(d, i) {
                     return labels[i];
                 })
-
             this.svg = d3.select("#demogVis").select("svg");
-
-
-
             hovernews
                 .on("mouseover", function(d) {
                     d3.selectAll(".hovernew")
@@ -693,16 +661,12 @@
                         })
                     d3.selectAll('.' + this.id).style("opacity", 1)
                 })
-
             .on("mouseout", function(d) {
                 d3.selectAll(".hovernew")
                     .style("opacity", function(k) {
                         return 1;
-
                     })
             })
-
-
         }
     </script>
 </body>
