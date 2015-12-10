@@ -28,7 +28,7 @@
         },
         {
           title: "Math vs. Survey Results",
-          content: "Math Score represents standardized test results, while surveys are ratings (higher the better) students assign their schools. These two scores are evaluated on different scales and have different relationships to the variables above, so look out for different trends affecting each!",
+          content: "Math Score represents standardized test results, while surveys are assessments (higher the better) where students evaluate their success at their given school. These two scores are evaluated on different scales and have different relationships to the variables above, so look out for different trends affecting each!",
           target: "scorevalue",
           placement: "right"
         }
