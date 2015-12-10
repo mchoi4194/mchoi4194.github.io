@@ -36,18 +36,15 @@
                     ranges.push(w);
                     total += w;
                 }
-                // console.log(ranges)
                 var races = ["Hispanic: ", "Black: ", "White: ", "Asian: "]
                 for (i = 0; i < columns.length; i++) {
                     ranges[i] = 100 * ranges[i] / total;
                     carriage = ranges[i] - w
                     s += " " + races[i] + Math.round(ranges[i]) + "%,";
                 }
-                console.log('RANGES', ranges)
                 update_demogvis(ranges)
                 update_score(ranges)
                 s = s.slice(0, -1)
-                console.log(s);
                 $("#slidertext").html(s);
             }
 
@@ -326,7 +323,6 @@
 
         // Load in coefficients from regression output for math scores
         d3.json("data/coef_math.json", function(error, data) {
-            console.log(data)
             original_data = {
                 "Funding": data["Funding"],
                 "Hispanic%": data["Hispanic Percentage"],
@@ -349,6 +345,7 @@
             sizes = []
             intercept = original_data["intercept"]
 
+            // Create options for class size dropdown
             for (i = 1; i <= 55; i++) {
                 sizes.push(i)
             }
@@ -596,14 +593,11 @@
 
 
         }
-
+        // create demographic visualization using exact same code as update_gendervis, just modifying the class and id's to make sure the hover connection for the legend remain bound to only this visualization
         function update_demogvis(value) {
             var newcolor = ["Yellow", "Blue", "Green", "Purple"]
-                // var that = this; 
             var dpie = d3.layout.pie()
-            // console.log(value)
             dpie(value)
-            // console.log(user_final)
             var outerRadius = 55;
             var innerRadius = 0;
             var hovernew = d3.svg.arc()
