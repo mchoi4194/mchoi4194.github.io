@@ -4,7 +4,7 @@
       steps: [
         {
           title: "Welcome",
-          content: "Toggle these sliders to set values for these variables.",
+          content: "Toggle these sliders to set values for these variables. The values for the predicted scores will then update based on the variable values you select.",
           target: "fundingslider",
           placement: "right"
         },
