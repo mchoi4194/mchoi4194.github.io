@@ -4,7 +4,7 @@
       steps: [
         {
           title: "Welcome",
-          content: "Toggle these sliders to set values for these variables. The values for the predicted scores will then update based on the variable values you select.",
+          content: "Toggle these sliders to set values for these variables.",
           target: "fundingslider",
           placement: "right"
         },
@@ -22,10 +22,16 @@
         },
         {
           title: "Predict Results",
-          content: "See the predicted score based on the variables you selected and the coefficients outputted from our regressions. These two scores are evaluated on different scales and have different relationships to the variables above, so look out for different trends affecting each!",
+          content: "See the predicted score based on the variables you selected and the coefficients outputted from our regressions.",
           target: "scorevalue",
           placement: "right"
         },
+        {
+          title: "Math vs. Survey Results",
+          content: "Math Score represents standardized test results, while surveys are ratings (higher the better) students assign their schools. These two scores are evaluated on different scales and have different relationships to the variables above, so look out for different trends affecting each!",
+          target: "surveyscorevalue",
+          placement: "right"
+        }
         
       ]
     };
